@@ -369,3 +369,8 @@ Contributions are welcome. Please open an issue or submit a pull request.
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
+## OpenCode 2.x
+
+- `src/index.v2.ts` — v2 plugin API entry (`{ id, setup }`): slims long tool descriptions via the context hook and adds line-range support (`startLine`/`endLine`) to the `edit` guard.
+- Import as `openslimedit/v2` (see `exports` in `package.json`).
