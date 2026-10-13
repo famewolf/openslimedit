@@ -57,6 +57,8 @@ The npm entry above targets the OpenCode 1.x plugin API; 2.0.x validates plugin 
 
 The benchmark above was measured on OpenCode 1.x; the 45% number is not directly reproducible on 2.0.x because tool names and result formats differ, but the description-compression savings (the biggest contributor) carry over.
 
+Result compaction for `websearch`/`webfetch` output was investigated (2026-10-13) and deliberately not implemented: 2.0.x results arrive pre-cleaned from the provider (server-side conversion — 9 measured real outputs, 388 KB: 0.0% whitespace waste, no HTML/cookie/nav boilerplate), so no non-damaging plugin-level compaction is possible. The one-line overflow footer ("showing lines X-Y of Z; full output saved to …") is a functional pointer to the saved full output, so it is kept.
+
 Install on 2.0.x (until the v2 entry is published):
 
 ```jsonc
