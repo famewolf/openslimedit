@@ -2,6 +2,8 @@
 
 An [OpenCode](https://github.com/anomalyco/opencode) plugin that reduces token usage by up to 45% with zero configuration. It compresses tool descriptions, compacts read output, and adds line-range edit support.
 
+**OpenCode 2.0.x users:** the npm entry below targets the OpenCode 1.x plugin API and does not load on 2.0.x — see [OpenCode v2](#opencode-v2-20x) below.
+
 ---
 
 ## Token Savings at a Glance
@@ -34,11 +36,36 @@ Three optimizations that compound across every API call:
 
 1. **Tool description compression** — Replaces verbose built-in tool descriptions with minimal versions. Since tool schemas are sent with every API call, this saves thousands of input tokens per step.
 
-2. **Compact read output** — Shortens absolute file paths to relative paths, strips type tags and footer boilerplate from file reads.
+2. **Compact read output** — Shortens absolute file paths to relative paths; on OpenCode 1.x also strips type tags and footer boilerplate (2.0.x results carry neither, so only the path shortening applies there).
 
 3. **Line-range edit expansion** — Allows the model to specify `oldString` as a line range like `"55-64"` instead of reproducing exact file content. The plugin transparently expands the range to the actual lines before the edit tool runs.
 
 No custom tools. No system prompt injection. No modifications to built-in tool behavior. Everything works through lightweight hooks.
+
+---
+
+## OpenCode v2 (2.0.x)
+
+The npm entry above targets the OpenCode 1.x plugin API; 2.0.x validates plugin shape and rejects the v1 format, so it does not load. 2.0.x hosts use the v2 entry `src/index.v2.ts` (export `./v2`, `{ id, setup }` shape):
+
+| v1 feature | 2.0.x status |
+|---|---|
+| Tool description compression | Kept — applied via `ctx.session.hook("context")` to tools that exist in 2.0.x. (`bash`, `list`, `fetch` are v1-only names; `shell`/`webfetch` are not slimmed.) |
+| Compact read output | Partial — 2.0.x results carry no type tags or footer boilerplate, so only the path shortening applies: `Read file /abs/path` → session-relative. |
+| Edit result compaction (`Edit applied successfully. …` → `OK`) | Equivalent — the single-line 2.0.x `Edited /abs/path (N replacement)` result is rewritten to `OK`. |
+| Line-range edit (`"55-64"` → real lines) | Kept — `execute.before` on `edit` (field is `path` in 2.0.x, `filePath` in 1.x). |
+
+The benchmark above was measured on OpenCode 1.x; the 45% number is not directly reproducible on 2.0.x because tool names and result formats differ, but the description-compression savings (the biggest contributor) carry over.
+
+Install on 2.0.x (until the v2 entry is published):
+
+```jsonc
+{
+  "plugins": ["file:///absolute/path/to/openslimedit/src/index.v2.ts"]
+}
+```
+
+Once the v2 entry is published, `openslimedit/v2` works the same way.
 
 ---
 
@@ -354,7 +381,8 @@ Minimax shows consistent savings (11-19%) at all file sizes. GPT 5.3 Codex shows
 ```
 openslimedit/
 ├── src/
-│   └── index.ts      # Plugin implementation (single file)
+│   ├── index.ts      # v1 plugin entry
+│   └── index.v2.ts   # v2 plugin entry (`{ id, setup }`)
 ├── package.json
 ├── LICENSE
 └── README.md
@@ -370,7 +398,4 @@ Contributions are welcome. Please open an issue or submit a pull request.
 
 This project is licensed under the [MIT License](LICENSE).
 
-## OpenCode 2.x
 
-- `src/index.v2.ts` — v2 plugin API entry (`{ id, setup }`): slims long tool descriptions via the context hook and adds line-range support (`startLine`/`endLine`) to the `edit` guard.
-- Import as `openslimedit/v2` (see `exports` in `package.json`).
