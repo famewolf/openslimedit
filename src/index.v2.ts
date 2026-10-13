@@ -33,8 +33,8 @@ const SLIM_DESC: Record<string, string> = {
 export const OpenSlimeditV2Plugin = {
   id: "openslimedit-v2",
   setup: async (ctx: any) => {
-    // Kill switch (bench support): OPENSLEMEDIT_DISABLED=1 disables the whole plugin (token-baseline runs).
-    if (process.env.OPENSLEMEDIT_DISABLED === "1") return;
+    // Kill switch (bench support): OPENSLIMEDIT_DISABLED=1 disables the whole plugin (token-baseline runs).
+    if (process.env.OPENSLIMEDIT_DISABLED === "1") return;
 
     const directory = ctx?.location?.directory || process.cwd()
 

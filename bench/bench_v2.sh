@@ -2,7 +2,7 @@
 # bench_v2.sh — reproducible token bench for openslimedit v2 under opencode.
 #
 # Measures the total tokens a model processes for a fixed set of small file-edit
-# tasks, with the plugin ON vs OFF (OPENSLEMEDIT_DISABLED=1). Reports the median
+# tasks, with the plugin ON vs OFF (OPENSLIMEDIT_DISABLED=1). Reports the median
 # total tokens per task and the % delta, so the slimming effect is reproducible
 # on any opencode install that loads this plugin.
 #
@@ -16,7 +16,7 @@
 #         default REPS     = 2
 #
 # Requires: opencode v2 on PATH; the openslimedit-v2 plugin loaded globally
-#           (it reads OPENSLEMEDIT_DISABLED from the process environment).
+#           (it reads OPENSLIMEDIT_DISABLED from the process environment).
 set -u
 DATA="${1:-$HOME/opencode/bench_osme}"
 REPS="${2:-2}"
@@ -61,7 +61,7 @@ run_one() { # $1=taskIdx $2=mode(on|off) $3=rep
   if [ "$mode" = "on" ]; then
     opencode run "$task" > "$DATA/run_${mode}_r${rep}.log" 2>&1
   else
-    OPENSLEMEDIT_DISABLED=1 opencode run "$task" > "$DATA/run_${mode}_r${rep}.log" 2>&1
+    OPENSLIMEDIT_DISABLED=1 opencode run "$task" > "$DATA/run_${mode}_r${rep}.log" 2>&1
   fi
   rc=$?
   after=$(opencode session list 2>/dev/null | grep '^ses_' | awk '{print $1}' | sort)
