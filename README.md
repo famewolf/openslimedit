@@ -50,7 +50,7 @@ The npm entry above targets the OpenCode 1.x plugin API; 2.0.x validates plugin 
 
 | v1 feature | 2.0.x status |
 |---|---|
-| Tool description compression | Kept — applied via `ctx.session.hook("context")` to tools that exist in 2.0.x. (`bash`, `list`, `fetch` are v1-only names; `shell`/`webfetch` are not slimmed.) |
+| Tool description compression | Kept — applied via `ctx.session.hook("context")` to every 2.0.x tool with a v1 counterpart: `read`, `edit`, `write`, `shell`, `glob`, `grep`, `webfetch` (v1's `apply_patch`/`bash`/`list`/`fetch` don't exist in 2.0.x and were dropped; `websearch` is intentionally unslimmed). |
 | Compact read output | Partial — 2.0.x results carry no type tags or footer boilerplate, so only the path shortening applies: `Read file /abs/path` → session-relative. |
 | Edit result compaction (`Edit applied successfully. …` → `OK`) | Equivalent — the single-line 2.0.x `Edited /abs/path (N replacement)` result is rewritten to `OK`. |
 | Line-range edit (`"55-64"` → real lines) | Kept — `execute.before` on `edit` (field is `path` in 2.0.x, `filePath` in 1.x). |
