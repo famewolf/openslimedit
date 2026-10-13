@@ -57,6 +57,20 @@ The npm entry above targets the OpenCode 1.x plugin API; 2.0.x validates plugin 
 
 The benchmark above was measured on OpenCode 1.x; the 45% number is not directly reproducible on 2.0.x because tool names and result formats differ, but the description-compression savings (the biggest contributor) carry over.
 
+Measured v2 savings (deterministic tokenizer bench, 2026-10-13 — no model
+involved, zero variance; originals byte-extracted from the 2.0.x binary):
+tool descriptions 414 → 42 tokens (saves 372: read 100, edit 108, write 40,
+shell 5, glob 16, grep 47, webfetch 56) ≈ 1.6% of a ~23K first turn; edit
+confirmations → `OK` save 18 tokens each; read-header relativization saves
+11 tokens per read. A typical edit task saves ≈ 400 tokens ≈ 1.7% of
+first-turn context (cached after turn 1). At the session-total level the
+effect is break-even — three edit tasks × {on,off} × 2 reps swung ±20% in
+inconsistent directions (run-to-run agent behavior + cache placement dominate),
+and a behavioral A/B (18 runs, 18/18 success both modes) showed tool-call
+counts indistinguishable from noise. Report per-element savings, not session
+percentages: on a single GPU with limited context every bit helps, but the
+v1 "45%" does not transfer to v2 session totals.
+
 Result compaction for `websearch`/`webfetch` output was investigated (2026-10-13) and deliberately not implemented: 2.0.x results arrive pre-cleaned from the provider (server-side conversion — 9 measured real outputs, 388 KB: 0.0% whitespace waste, no HTML/cookie/nav boilerplate), so no non-damaging plugin-level compaction is possible. The one-line overflow footer ("showing lines X-Y of Z; full output saved to …") is a functional pointer to the saved full output, so it is kept.
 
 Install on 2.0.x (until the v2 entry is published):
