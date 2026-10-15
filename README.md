@@ -100,6 +100,19 @@ Using `@latest` ensures you always get the newest version automatically when Ope
 
 Restart OpenCode. The plugin will automatically start optimizing your sessions.
 
+Requires opencode v2.0+ (any 2.0.x server). Uses core session/tool hooks only.
+
+---
+
+## Updating
+
+npm installs (`openslimedit@latest`) update automatically on restart. Pinned
+versions: bump the pin, restart. There is no in-place updater.
+
+## Uninstall
+
+Remove the entry from your OpenCode config and restart.
+
 ---
 
 ## Benchmark
