@@ -73,15 +73,40 @@ v1 "45%" does not transfer to v2 session totals.
 
 Result compaction for `websearch`/`webfetch` output was investigated (2026-10-13) and deliberately not implemented: 2.0.x results arrive pre-cleaned from the provider (server-side conversion — 9 measured real outputs, 388 KB: 0.0% whitespace waste, no HTML/cookie/nav boilerplate), so no non-damaging plugin-level compaction is possible. The one-line overflow footer ("showing lines X-Y of Z; full output saved to …") is a functional pointer to the saved full output, so it is kept.
 
-Install on 2.0.x (until the v2 entry is published):
+### Install (OpenCode 2.x)
 
-```jsonc
-{
-  "plugins": ["file:///absolute/path/to/openslimedit/src/index.v2.ts"]
-}
+Two supported methods; both load the prebuilt `index.js` (plugin id `openslimedit-v2`):
+
+**1. CLI (git package spec — no manual extraction):**
+
+```sh
+opencode plugin add github:famewolf/openslimedit#v2.0
+opencode plugin list          # confirm the installed entry
 ```
 
-Once the v2 entry is published, `openslimedit/v2` works the same way.
+**2. Manual — local directory, same form as any local plugin in `opencode.json(c)`:**
+extract the `openslimedit-2.0.0.tgz` release asset (or clone the fork at tag
+`v2.0`) into a local directory, e.g. `~/.config/opencode/plugins/openslimedit`,
+and add the directory to the global or project `opencode.json(c)`:
+
+```jsonc
+{ "plugins": ["file:///absolute/path/plugins/openslimedit"] }
+```
+
+Configured local entries must be directories (OpenCode loads the directory's
+`index` module); a path to a single file is skipped.
+
+Restart OpenCode after installing.
+
+### Uninstall
+
+```sh
+opencode plugin remove <entry shown by opencode plugin list>
+# i.e. opencode plugin remove github:famewolf/openslimedit#v2.0
+```
+
+or manually: delete the `plugins` entry from `opencode.json(c)` and remove the
+local directory (the CLI install removes its package automatically).
 
 ---
 
