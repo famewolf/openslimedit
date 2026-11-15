@@ -6,6 +6,43 @@ An [OpenCode](https://github.com/anomalyco/opencode) plugin that reduces token u
 
 ---
 
+## Install
+
+**npm (recommended):**
+
+```sh
+npm install openslimedit-v2
+# then add to your opencode.json(c) plugins array:
+# "plugins": ["openslimedit-v2"]
+```
+
+Or via the OpenCode CLI: `opencode plugin add openslimedit-v2`.
+
+**Manual (local directory) — alternative:** download the release tarball, extract it
+(`tar xzf openslimedit-2.0.0.tgz` — contents land in `package/`), place the
+directory somewhere permanent (e.g. `~/.config/opencode/plugins/openslimedit`),
+then add to your global or project `opencode.json(c)`:
+
+```jsonc
+{ "plugins": ["file:///absolute/path/plugins/openslimedit"] }
+```
+
+Local `plugins` entries must be **directories** (OpenCode loads the directory's
+`index` module); a path to a single file is skipped. Restart OpenCode after
+installing.
+
+## Uninstall
+
+```sh
+opencode plugin remove openslimedit-v2
+# or: npm uninstall openslimedit-v2
+```
+
+Manual: remove the `plugins` entry from `opencode.json(c)` and delete the
+directory (a CLI install removes its package automatically).
+
+---
+
 ## Token Savings at a Glance
 
 ```

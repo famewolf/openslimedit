@@ -1,17 +1,17 @@
 {
-  "name": "openslimedit",
-  "version": "1.0.4",
-  "description": "OpenCode plugin that reduces token usage by up to 33% — compresses tool descriptions, compacts read output, adds line-range edit support",
+  "name": "openslimedit-v2",
+  "version": "2.0.0",
+  "description": "OpenCode plugin that reduces token usage — compresses tool descriptions, compacts read output, adds line-range edit support. Supports both OpenCode 1.x and 2.0.x (v1 entry ./src/index.ts, v2 entry ./src/index.v2.ts).",
   "type": "module",
   "license": "MIT",
-  "author": "ASidorenkoCode",
+  "author": "famewolf",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ASidorenkoCode/openslimedit.git"
+    "url": "https://github.com/famewolf/openslimedit.git"
   },
-  "homepage": "https://github.com/ASidorenkoCode/openslimedit",
+  "homepage": "https://github.com/famewolf/openslimedit",
   "bugs": {
-    "url": "https://github.com/ASidorenkoCode/openslimedit/issues"
+    "url": "https://github.com/famewolf/openslimedit/issues"
   },
   "keywords": [
     "opencode",
