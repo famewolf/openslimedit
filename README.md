@@ -11,12 +11,12 @@ An [OpenCode](https://github.com/anomalyco/opencode) plugin that reduces token u
 **npm (recommended):**
 
 ```sh
-npm install openslimedit-v2
+npm install @famewolf/openslimedit
 # then add to your opencode.json(c) plugins array:
-# "plugins": ["openslimedit-v2"]
+# "plugins": ["@famewolf/openslimedit"]
 ```
 
-Or via the OpenCode CLI: `opencode plugin add openslimedit-v2`.
+Or via the OpenCode CLI: `opencode plugin add @famewolf/openslimedit`.
 
 **Manual (local directory) — alternative:** download the release tarball, extract it
 (`tar xzf openslimedit-2.0.0.tgz` — contents land in `package/`), place the
@@ -34,8 +34,8 @@ installing.
 ## Uninstall
 
 ```sh
-opencode plugin remove openslimedit-v2
-# or: npm uninstall openslimedit-v2
+opencode plugin remove @famewolf/openslimedit
+# or: npm uninstall @famewolf/openslimedit
 ```
 
 Manual: remove the `plugins` entry from `opencode.json(c)` and delete the
